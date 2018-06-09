@@ -1,0 +1,72 @@
+﻿Evan Miller 
+4/25/18
+CS140U 
+Lab 4
+
+
+
+
+User A:
+
+1. Confirm working directory:
+
+  $ pwd  (/home/student/evan.miller/)
+
+2. create a new temp directory:
+    
+   $ mkdir temp  (/home/student/evan.miller/temp)
+
+3. Create data.txt file:
+    
+   $ touch data.txt
+
+4. Set file access permissions for all users:
+    
+   $ chmod a+rw data.txt
+
+5. Move file to temp directory:      
+
+   $ mv data.txt /home/student/UserB/temp
+
+6. Hard link to data.txt in User B's directory:
+
+   $ ln data.txt /home/student/UserB/file1/data_2.txt
+
+7. Confirm link: 
+   
+   $ ls -l /home/student/UserB/file1/data.txt
+
+
+
+
+
+
+
+
+
+
+
+User B:
+
+1. Confirm working directory:
+
+   $ pwd (/home/student/”User B’s name”/)
+
+2. Change user directory permissions to allow read and write access by another user.
+
+   $ chmod a+rwx /home/student/UserB       
+ 
+3. Create a new directory for file1 in /home/student/UserB using command
+
+    $ mkdir file1
+
+4. Change permissions for other users:
+
+    $ chmod a+rwx /home/student/UserB/file1
+   
+   The owner and other users should have drwxrwxrwx permissions.
+
+5. Access file1 directory (/home/student/”User B’s Name”/file1)
+    and display the contents:
+
+   $ cat data_2.txt

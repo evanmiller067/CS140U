@@ -1,0 +1,140 @@
+#!/bin/bash
+# Evan Miller
+# cs140u
+# assignment 6
+# 6/2/18
+# menu interface for common linux/unix tasks
+
+clear 
+
+until [ "$userIn" = "j" ] 	# j to quit program
+	do
+		echo -e "\n Command Menu\n"
+		echo " a. Emailer Program "
+		echo " b. Users Currently Logged On "
+		echo " c. Current Date and Time "
+		echo " d. This months Calendar "
+		echo " e. Name of the Working Directory "
+		echo " f. Contencts of the Working Directory "
+		echo " g. Find the IP of a Web Address "
+		echo " h. See your Fortune "
+		echo " i. Print a File(on the screen) "
+		echo " j. Exit program "
+		echo 
+		echo -n  " Please select a letter: "	#prompt user
+		read userIn				#read response
+
+#--------------------------------------------------------------------
+
+#option A. Emailer Program
+
+case $userIn in
+	a|A) # a or A selected
+	clear
+	echo -n " Subject: "
+	read subject
+	clear
+	echo -n " Recipient: "
+	read recipient
+	clear
+	echo -n " Attached file Path: "
+	read attached
+	mail -s "$subject" "$recipient" < "$attached"
+	clear
+	echo "Mail sent to " "$recipient"
+	;;
+
+#--------------------------------------------------------------------
+
+# option B. users logged in
+
+	b|B)
+	clear
+	who	#users info
+	;;
+
+#--------------------------------------------------------------------
+
+# option C. Date and Time
+
+	c|C)
+	clear
+	date
+	;;
+
+#--------------------------------------------------------------------
+
+#option D. Calendar
+	d|D)
+	clear
+	cal
+	;;
+
+#--------------------------------------------------------------------
+
+# option E. Working Directory
+	e|E)
+	clear
+	pwd
+	;;
+
+#--------------------------------------------------------------------
+
+# option F. contents of working Directory
+	f|F)
+	clear
+	ls
+	;;
+
+#--------------------------------------------------------------------
+
+# option G. Find IP
+	g|G)
+	clear
+	echo -n "Web Address: "
+	read webAddress
+	host "$webAddress" #use host command to find ip of address
+	;;
+
+#--------------------------------------------------------------------
+
+# option H. Fortune
+	h|H)
+	clear
+	fortune
+	;;
+
+#--------------------------------------------------------------------
+
+# option I. print to screen
+	i|I)
+	echo -n "File to print: "
+	read printFile
+	if [ -f "$printFile" ]	#test if normal file
+		then
+			less "$printFile"	#print file with less
+	else
+		echo " File not found." 
+	fi
+	;;
+
+#--------------------------------------------------------------------
+
+# option J. Exit
+
+	j|J)
+	clear
+	;;
+
+#--------------------------------------------------------------------
+
+# invalid char case
+
+	*)
+	clear
+	echo -e " Input invalid. \n"
+	echo " Please enter A - J: "
+	;;
+esac
+
+done

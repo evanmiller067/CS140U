@@ -1,0 +1,8 @@
+#!/bin/bash
+# Evan Miller / 5/30
+# program to respond when a user is logged on
+
+until who | grep "$1" > /dev/null # null until the user logs on
+	do sleep 30 # sleep for 30 seconds
+	done
+echo "$1 is logged on." exit 0

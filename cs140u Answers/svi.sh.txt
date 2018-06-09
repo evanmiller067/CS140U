@@ -1,0 +1,17 @@
+#!/bin/bash
+# Evan Miller / 5/30
+# Copy a file and open it in vi
+
+
+if test $# = 1 # test if number of arguments is equal to one
+	then
+		if test -f$1 # test if argument is a normal file
+	then
+		cp $1 $HOME/keep #copy file to keep folder under users home dir
+		vi $1
+	else
+		echo " File not found. Try again"
+		fi
+	else
+		echo " You must specify a file name. Try again."
+		fi

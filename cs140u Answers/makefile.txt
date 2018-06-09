@@ -1,0 +1,3 @@
+reverseit: reverseit.cpp
+	g++ reverseit.cpp -o reverseit
+

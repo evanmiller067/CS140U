@@ -1,0 +1,270 @@
+﻿Instructions for Lab 5
+CS140U Extra Credit AWK Extra points Exercises.  
+Names: Evan Miller
+
+
+Find the answers, using awk, for the following statements you will get extra points for each correct answer. Points will be given only if 100% correct. These awk commands are just one line long each.
+
+
+DO NOT SHARE YOUR ANSWERS, THIS IS EXTRA CREDIT, WHICH MEANS INDIVIDUAL EFFORT (or groups of 2). Upload to the proper lab dropbox. 
+
+
+Hint: you may consult your notes and the Web if necessary.
+
+
+You will be doing your awk searches on a file called longfile and winelist. To obtain these files use the command:
+yourid@syccuxfs01:~> cp ~wmorales/awkexercise/longfile ~
+and
+yourid@syccuxfs01:~> cp ~wmorales/awkexercise/winelist ~
+
+
+This will copy the two files that you will need for this exercise from your instructor’s directory to your home directory.
+
+
+(3 points - easy)
+1)  Using awk, write the command that would print the line that contains the word "selected". This file has a lot of junk in it. So, you are just searching for the lines that contain the word “selected”. Your awk script will look into the file called longfile and once it finds all the lines that contain the word "selected" it will display the line. The output should be:
+
+
+output: (There should be only one line)
+server, or at least to a "randomly" selected one of the servers covering
+
+
+YOUR AWK COMMAND: > awk ‘/selected/’ longfile
+
+
+(10 points hard one)
+2) Write the command that would find all lines that have an email address and place a label email = before the line in the file longfile
+
+
+output will multiple lines similar to this one :
+email = adnan_mazhar@hotmail.com
+email = aftab@klinkers.net
+email = budz@logos.cy.net
+email = info@continuum.net
+email = jhamill@ibm.net
+------------------- cut ------------------------
+ 
+
+
+You would be searching for lines with the words from: to: Cc:, To:, cc: usually after these characters, there could be a good, valid e-mail address.
+
+
+YOUR AWK COMMAND: > awk '/[Ff]rom:/||/[Tt]o:/||/[Cc]c:/ {print "email= ", $0}' longfile
+
+
+(3 points - easy)
+3)           Write the awk command that would show the user wmorales (or yourself) that is online (you have to use a pipe)
+Output, depending on the system, would be similar to:
+wmorales pts/37   10.32.9.93           13:58        1.00s  0.15s  0.10s w
+YOUR AWK COMMAND: > w | awk ‘/evan.miller/’ 
+(10 points hard one) - 
+4)           finger or  who the users on our system that have the letter r in their first name, or last name, but nowhere else. Note also that the r can be r or R.
+
+
+Outcyrus.rice pts/21           2017-10-23 12:38 (jamess-iphone-2.wifi.pcc.edu)
+tina.olsgaard pts/29           2017-10-23 12:41 (174-25-110-78.ptld.qwest.net)
+rachel.benes pts/30           2017-10-23 12:54 (laptop-2j35sntl.wifi.pcc.edu)
+rachel.benes pts/33           2017-10-23 13:43 (laptop-2j35sntl.wifi.pcc.edu)
+jarod.morrow pts/35           2017-10-23 12:54 (sytc310-08.ad.pcc.edu)
+wmorales pts/37           2017-10-23 13:58 (10.32.9.93)put would be similar to:
+-----------------------   cut ------------------
+
+
+note: the letter r or R has to appear either in their first name or last name only, not on the name of the machine that they are using if it happen to have r in it.
+
+
+YOUR AWK COMMAND: > who | awk '$1 ~ /[rR]/ {printf "%-20s %s\t %s\t %s\t %s\n" , $1, $2, $3, $4, $5}'
+
+
+5)           (3 points - easy) 
+from the file called winelist extract a list of wines that cost less than $7.00
+
+
+output (it may be different depending the time you do it): 
+1977        6.99        Franciscan
+1977        6.75        Alexander Valley
+1977        5.99        Charles Krug
+
+
+YOUR AWK COMMAND: > awk '$2 < 7.00' winelist
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+=~=~=~=~=~=~=~=~=~=~=~= PuTTY log 2018.05.02 17:51:46 =~=~=~=~=~=~=~=~=~=~=~=
+login as: evan.miller
+evan.miller@syccuxas01:~> ~> cp ~wmorales/awkexercise/longfile ~
+evan.miller@syccuxas01:~> cp ~wmorales/awkexercise/winelist ~
+evan.miller@syccuxas01:~> awk '/selected/' longfile
+server, or at least to a "randomly" selected one of the servers covering
+evan.miller@syccuxas01:~> awk '/[Ff}]rom:/\\\\\\||/[Tt]o:/||/[CCc]c;:/ {print "email= ",  
+$0}' longfile
+email=  From: "Linder, Jann/WDC" <jlinder@CH2M.com>
+email=  To: Mr Arlington Hewes <tpcadmin@info.tpc.int>
+email=  Cc: "tpc-rp@info.tpc.int" <tpc-pc@info.tpc.int>
+email=  > From:Mr Arlington Hewes [SMTP:tpcadmin@info.tpc.int]
+email=  > To:tpc-rp@info.tpc.int
+email=  From: The.Internet.People@usa.net
+email=  To: John Hamill <jhamill@ibm.net>
+email=  > From: The.Internet.People@usa.net <The.Internet.People@usa.net>
+email=  > To: john Hamil <jh@lan1.com.au>
+email=  From: "Paul Budden" <budz@logos.cy.net>
+email=  To: <The.Internet.People@usa.net>
+email=  Cc: <tpc-pc@info.tpc.int>
+email=  From: The.Internet.People@usa.net <The.Internet.People@usa.net>
+email=  To: John Hamill <jhamill@ibm.net>
+email=  Cc: tpc-pc@info.tpc.int <tpc-pc@info.tpc.int>
+email=  >> From: The.Internet.People@usa.net <The.Internet.People@usa.net>
+email=  >> To: john Hamil <jh@lan1.com.au>
+email=  From: "John Hamill" <jhamill@ibm.net>
+email=  To: "Paul Budden" <budz@logos.cy.net>,
+email=  Cc: <tpc-pc@info.tpc.int>
+email=  From: Mr. Arlington Hewes <tpcadmin@info.tpc.int>
+email=  To: Paul Budden <budz@logos.cy.net>
+email=  Cc: tpc-pc@info.tpc.int <tpc-pc@info.tpc.int>; jh@lan1.com.au
+email=  From: "jh" <jhamill@ibm.net>
+email=  To: "Paul Budden" <budz@logos.cy.net>,
+email=  Cc: <tpc-pc@info.tpc.int>
+email=  From: John Hamill <jhamill@ibm.net>
+email=  To: Paul Budden <budz@logos.cy.net>; Mr. Arlington Hewes
+email=  Cc: tpc-pc@info.tpc.int <tpc-pc@info.tpc.int>
+email=  >From: Mr. Arlington Hewes <tpcadmin@info.tpc.int>
+email=  >To: Paul Budden <budz@logos.cy.net>
+email=  >Cc: tpc-pc@info.tpc.int <tpc-pc@info.tpc.int>; jh@lan1.com.au
+email=  To: "jh" <jhamill@ibm.net>
+email=  Cc: tpc-pc@info.tpc.int
+email=  In-reply-to: Your message of "Wed, 07 Jan 1998 12:58:48 +1100."
+email=  From: "Mr. Arlington Hewes" <tpcadmin@info.tpc.int>
+email=  From: David Cunningham <omicron@jade.bc.ca>
+email=  To: tpc-pc@info.tpc.int
+email=  To: David Cunningham <omicron@jade.bc.ca>
+email=  cc: tpc-pc@info.tpc.int, sjoyce@virtualplanet.com
+email=  In-reply-to: Your message of "Thu, 08 Jan 1998 00:19:58 PST."
+email=  From: "Mr. Arlington Hewes" <tpcadmin@info.tpc.int>
+email=  From: David Cunningham <omicron@jade.bc.ca>
+email=  To: "Mr. Arlington Hewes" <tpcadmin@info.tpc.int>
+email=  From: "John Hamill" <jh@lan1.com.au>
+email=  To: "David Cunningham" <omicron@jade.bc.ca>,
+email=  Cc: <tpc-pc@info.tpc.int>, <sjoyce@virtualplanet.com>
+email=  From: Mr. Arlington Hewes <tpcadmin@info.tpc.int>
+email=  To: David Cunningham <omicron@jade.bc.ca>
+email=  Cc: tpc-pc@info.tpc.int <tpc-pc@info.tpc.int>; sjoyce@virtualplanet.com
+email=  From: "Adnan Mazhar" <adnan_mazhar@hotmail.com>
+email=  To: tpc-pc@info.tpc.int
+email=  From: "Adnan Mazhar" <adnan_mazhar@hotmail.com>
+email=  To: tpc-pc@info.tpc.int
+email=  >>From: "Mr. Arlington Hewes" <tpcadmin@info.tpc.int>
+email=  From: David Cunningham <omicron@jade.bc.ca>
+email=  To: tpc-pc@info.tpc.int
+email=  From: Richard Whitfield <RCW@megatrend.com.hk>
+email=  To: "'tpc-pc@info.tpc.int'" <tpc-pc@info.tpc.int>
+email=  From: David Cunningham <info@continuum.net>
+email=  To: tpc-pc@info.tpc.int
+email=  From: "mail-daemon" <null@continuum.net>
+email=  To: info@continuum.net
+email=  From: David Cunningham <info@continuum.net>
+email=  To: remote-printer.DAVID_CUNNINGHAM@9.2.5.4.8.8.6.4.0.6.1.tpc.int
+email=  From: "Aftab A. Siddiqui" <aftab@klinkers.net>
+email=  Reply-To: aftab@klinkers.net
+email=  To: tpc-pc@info.tpc.int
+email=  From: Richard Whitfield <RCW@megatrend.com.hk>
+email=  To: "'tpc-pc@info.tpc.int'" <tpc-pc@info.tpc.int>
+email=  To: David Cunningham <info@continuum.net>
+email=  cc: tpc-pc@info.tpc.int
+email=  In-reply-to: Your message of "Wed, 21 Jan 1998 23:10:05 PST."
+email=  From: "Mr. Arlington Hewes" <tpcadmin@info.tpc.int>
+email=  From: David Cunningham <omicron@continuum.net>
+email=  To: tpc-pc@info.tpc.int
+email=  From: David Cunningham <omicron@continuum.net>
+email=  To: tpc-pc@info.tpc.int
+email=  >              To: david cunningham
+email=  >            From: David Cunningham <omicron@continuum.net>
+email=  From: David Cunningham <omicron@continuum.net>
+email=  To: tpc-pc@info.tpc.int
+email=  >              To: david cunningham
+email=  >            From: David Cunningham <omicron@continuum.net>
+email=  From: David Cunningham <omicron@continuum.net>
+email=  To: tpc-pc@info.tpc.int
+email=  From: Richard Whitfield <RCW@megatrend.com.hk>
+email=  To: "'tpc-pc@info.tpc.int'" <tpc-pc@info.tpc.int>
+email=  From: "John Hamill" <jhamill@ibm.net>
+email=  To: "Richard Whitfield" <RCW@megatrend.com.hk>, <tpc-pc@info.tpc.int>
+email=  From: "John Hamill" <jhamill@ibm.net>
+email=  To: "David Cunningham" <omicron@continuum.net>, <tpc-pc@info.tpc.int>
+email=  > From: David Cunningham <omicron@continuum.net>
+email=  > To: tpc-pc@info.tpc.int
+evan.miller@syccuxas01:~> w | awk '/evan.miller/' 
+evan.mil pts/30   static-50-53-5-7 17:52    5.00s  0.08s  0.00s sshd: evan.miller [priv]
+evan.miller@syccuxas01:~> w | awk '/wmorales/'
+evan.miller@syccuxas01:~> who | awk '$1 ~ /[rR]/ {printf "%-20s %s\t %s\t %s\t % 
+s\n" , $1, $2, $3, $4, $5}'
+nathan.aguilar       pts/0 2018-05-02 15:53 (c-71-59-139-8.hsd1.or.comcast.net)
+jonas.persson        pts/3 2018-05-02 18:00 (rc07112-13.ad.pcc.edu)
+joshua.wolsborn      pts/4 2018-05-02 18:07 (137.53.249.129)
+daniel.brewer1       pts/7 2018-05-02 17:31 (rc07227-01.ad.pcc.edu)
+christopher.duffens  pts/10 2018-05-02 13:15 (laptop-79k8r88r.wifi.pcc.edu)
+krista.bourgeois     pts/13 2018-05-02 17:51 (kristas-macbook.wifi.pcc.edu)
+andrew.niven         pts/14 2018-05-02 15:58 (static-50-53-167-197.bvtn.or.frontiernet.net)
+taylor.barnard       pts/18 2018-05-02 15:15 (c-24-20-81-117.hsd1.or.comcast.net)
+john.strenio         pts/20 2018-05-02 15:07 (c-71-193-234-197.hsd1.or.comcast.net)
+alexander.larue      pts/24 2018-05-02 17:39 (75.172.142.126)
+hailey.aldinger      pts/25 2018-05-02 17:52 (c-67-160-157-44.hsd1.or.comcast.net)
+nick.robinson        pts/27 2018-05-02 18:07 (rc07227-26.ad.pcc.edu)
+andrew.niven         pts/28 2018-05-02 15:58 (static-50-53-167-197.bvtn.or.frontiernet.net)
+ryan.dodson          pts/29 2018-05-02 17:13 (c-67-171-177-242.hsd1.or.comcast.net)
+evan.miller          pts/30 2018-05-02 17:52 (static-50-53-5-75.bvtn.or.frontiernet.net)
+ryan.dodson          pts/32 2018-05-02 17:16 (c-67-171-177-242.hsd1.or.comcast.net)
+noor.alabdalaali     pts/33 2018-05-02 16:09 (c-71-59-136-40.hsd1.or.comcast.net)
+forest.hoover        pts/34 2018-05-02 16:07 (24.22.47.157)
+chandler.campbell    pts/36 2018-05-02 17:55 (10.31.9.52)
+brian.raimundodiaz   pts/38 2018-05-02 17:57 (108.161.26.69)
+bradley.hopper       pts/41 2018-05-02 17:59 (desktop-kvbiqvp.wifi.pcc.edu)
+cindy.martin1        pts/42 2018-05-02 17:55 (c-71-59-136-69.hsd1.or.comcast.net)
+mark.garvey          pts/44 2018-05-02 17:55 (10.31.9.167)
+chandler.campbell    pts/46 2018-05-02 17:55 (10.31.9.52)
+alexander.larue      pts/49 2018-05-02 17:56 (75.172.142.126)
+brooks.russell       pts/51 2018-05-02 17:56 (rc07227-12.ad.pcc.edu)
+aidan.reidel         pts/52 2018-05-02 17:57 (10.31.9.155)
+aidan.reidel         pts/53 2018-05-02 17:57 (10.31.9.155)
+james.brady5         pts/54 2018-05-02 17:57 (103.sub-174-224-13.myvzw.com)
+patrick.oconnell2    pts/56 2018-05-02 17:57 (rc07227-16.ad.pcc.edu)
+christopher.partridge pts/58 2018-05-02 17:58 (rc07227-25.ad.pcc.edu)
+xinru.lu             pts/59 2018-05-02 17:59 (desktop-krgnskq.wifi.pcc.edu)
+deborah.neft         pts/60 2018-05-02 17:59 (rc07112i7907.ad.pcc.edu)
+connor.robetorye     pts/62 2018-05-02 18:02 (10.31.9.54)
+christopher.partridge pts/63 2018-05-02 18:03 (rc07227-25.ad.pcc.edu)
+wade.israel          pts/65 2018-05-02 18:06 (c-73-67-232-46.hsd1.or.comcast.net)
+bradley.hopper       pts/66 2018-05-02 18:05 (rc07227-28.ad.pcc.edu)
+orlando.cerralta     pts/67 2018-05-02 18:06 (static-50-53-1-185.bvtn.or.frontiernet.net)
+evan.miller@syccuxas01:~> awk '$2 < 7.00' winelist
+19775.99Charles Krug
+19676.75Alexander Valley
+19776.99Franciscan
+19815.44Cheap wine
+19994.99Madeira wine
+
+
+evan.miller@syccuxas01:~> exit
+logout
