@@ -1,0 +1,276 @@
+#!/bin/bash
+
+# Evan Miller
+# Jun 9 2018
+# CS140U 
+# Assignment 7
+
+# Menu for unix/linux
+
+#--------------------------------------------------------------------------------------------------
+
+
+# FUNCTIONS
+
+
+# Option 1: Current Users, prints users currently logged in----------------------------------------
+
+currentUsers(){
+
+	clear	# clears console output
+	who     # print current users
+	echo " Press ENTER to continue: "	# prints to console
+	read -n1 # press any key to continue
+}
+
+# Option 2: Calendar, give user month and year options---------------------------------------------
+
+calendarFind(){
+
+	clear
+	echo -n " Please select a month( 1 - 12 ): "
+	read month # saves user input as variable 
+	echo -n " Please enter a year( 1950 - 2030 ): "
+	read year
+	
+	if [ "$year" -ge 1950 ] && [ "$year" -le 2030 ] # If year variable's between 1950-2030
+		then
+			echo
+			cal "$month" "$year"	#output calendar 
+	
+	else
+		echo -e " \n  Year out of range. " # If year variable is outside range
+	
+	fi # finish if statement
+	echo " Press ENTER to continue: "
+	read -n1
+}
+
+# Option 3: Current Directory, prints name of current working directory----------------------------
+
+currentDir(){
+
+	clear
+	pwd # prints working directory
+	echo
+	echo " Press ENTER to continue: "
+	read -n1
+}
+
+# Option 4: Change Directory, change the current working directory---------------------------------
+
+changeDir(){
+
+	clear
+	echo -n " Please choose a directory: "
+	read newDir
+	if [ -d "$newDir" ]	# check if newDir is a directory
+		then
+			cd "$newDir" #change to new directory
+
+	elif [[ "$newDir" == "\$HOME" ]] || [[ "$newDir" == "~" ]] #else if newDir variable is home
+		then
+			eval cd $newDir #expand variable and run argument as command in current shell
+ 	
+	elif [ $# -eq 0 ] #if user didn't enter anything
+		then
+			cd # change to home dir
+	
+	else
+		cd # change to home directory is newDir doesn't work
+	
+	fi
+	echo " Press ENTER to continue: "
+	read -n1
+}
+
+# Option 5: Long list of files in current directory------------------------------------------------
+
+longDirList(){
+
+	clear
+	ls -1 | more	#use more to print working directory list
+	echo -e " \n Press ENTER to continue: "
+	read -n1
+
+}
+
+# Option 6: Print  Current time and date and calendar----------------------------------------------
+
+whenAmI(){
+
+	clear
+	cal	# print calendar
+	date	# print current date
+	echo -e " Press ENTER to continue: "
+	read -n1
+
+}
+
+# Option 7: Start VI edtior------------------------------------------------------------------------
+
+useVi(){
+
+	clear
+	echo -n "Please enter a file name: "
+	read fileName
+	if [ -f "$fileName" ] && file --mime $fileName | grep -q 'text' # if file is normal/not binary
+		then
+		read
+		vi "$fileName" # open file in vi editor
+	
+	elif file --mime $fileNmae | grep -q 'binary\|directory' #if file is binary/directory
+		then
+			echo -e " \n Binary files not allowed \n Directories not allowed "
+	
+	else
+		echo " File Created, opening Editor "
+		read
+		eval vi $fileName #if file is not found, create file and open editor
+	fi
+	
+	echo " Press ENTER to continue: "
+	read -n1
+}
+
+# Option 8: Email a file to a user-----------------------------------------------------------------
+
+emailer(){
+
+	#get subject
+	
+	clear
+	echo -n "Please enter a subject: "
+	read subject
+	
+	#get recipient
+
+	echo " Please enter recipients email address: "
+	read address
+	if grep -c $address /etc/passwd > 0 #check if address is valid
+		then
+			echo " match found "
+	else				#if not valid
+		echo " User not found. "
+		read
+		continue
+	fi
+ 
+	#attach file
+
+	echo -n " Please enter a file to attach: "
+	read attachedFile
+	if [ -f $attachedFile ] && file --mime $attachedFile | grep -q 'text' #check if normal/not binary
+		then
+			mail -s "$subject" "$address" < "$attachedFile" #send email
+			echo -e "\n Message sent " 
+	
+	elif [ -e $attachedFile ] # if file is not a regular file
+		then
+			echo -e " Not a valid file type. \n Press any key. "
+
+	else #if file not found
+		echo " File Not Found. "
+	
+	fi
+	echo " Press ENTER to continue: "
+	read -n1
+
+}
+
+# Option 9: Quit-----------------------------------------------------------------------------------
+
+quit(){
+
+	clear
+	echo " Press any key to quit: "
+	read -n1
+
+}
+
+# Invalid Input------------------------------------------------------------------------------------
+
+invalidInput(){
+
+	clear
+	echo -e  " Input Invalid \n Please choose from options 1 through 9.\n "
+	echo " Press ENTER to continue: "
+	read -n1
+
+}
+
+# Main function------------------------------------------------------------------------------------
+
+clear
+
+option =  " " # set option to null to run the until loop
+
+until [	"$option" = "9" ] # until 9 is selected the loop runs
+	do 
+		clear					# print menu and prompt user for option number
+		echo " Welcome to Evan's main menu "
+		echo
+		echo " 1 -- Display users currently logged in "
+		echo " 2 -- Display a calendar for a specific month and year "
+		echo " 3 -- Display the current directory path " 
+		echo " 4 -- Change directory "
+		echo " 5 -- Long listing of visible files in the current directory "
+		echo " 6 -- Display current time and date and calendar "
+		echo " 7 -- Start the vi editor "
+		echo " 8 -- Email a file to a user "
+		echo " 9 -- Quit "
+		echo 
+		echo -n  " Make your selection: "
+
+		read option	# read users response
+	
+# cases for user choice----------------------------------------------------------------------------
+		
+	case $option in
+	
+		1) # option 1, print users
+		currentUsers # call function
+		;;	# close case choice
+
+		2) # option 2, choose calendar
+		calendarFind
+		;;
+
+		3) # Option 3,  Current directory
+		currentDir
+		;;
+
+		4) # Option 4,  change directory
+		changeDir
+		;;
+
+		5) # Option 5,  long list directory print
+		longDirList
+		;;
+
+		6) # Option 6, current date/time/calendar
+		whenAmI
+		;;
+
+		7) # Option 7, use the vi editor
+		useVi
+		;;
+
+		8) # Option 8, email program
+		emailer
+		;;
+
+		9) # Option 9, Quit
+		quit
+		;;
+
+		*) # for all char not between 1 and 9
+		invalidInput
+		;;
+
+	esac # end case
+
+done # end do function
+		
+
+
