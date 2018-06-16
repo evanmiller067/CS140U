@@ -270,7 +270,7 @@ until [	"$option" = "9" ] # until 9 is selected the loop runs
 
 	esac # end case
 
-done # end do function
+done # end of do function
 		
 
 
